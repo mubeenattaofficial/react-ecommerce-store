@@ -1,0 +1,27 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #0b0d10;
+  color: white;
+}
+
+#root {
+  min-height: 100vh;
+  width: 100%;
+}
+
+.app {
+  /* min-height: 550px; */
+  width: 610px;
+  padding: 40px;
+align-items: center;
+}
+#cart {
+  height: 550px;
+  width: 1263px;
+}
