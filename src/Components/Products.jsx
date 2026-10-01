@@ -18,18 +18,21 @@ const Products = ({ addToCart, products, search, setSearch, category, setCategor
                         outline: "none"
                     }}
                 />
-                <select value={category} onChange={(e) => { setCategory(e.target.value), setSearch("") }} className="form-select ms-3 border-2 border-black rounded-pill" style={{ width: "200px" }}>
-                    <option value="all">All Categories</option>
-                    <option value="Wireless">Wireless</option>
-                    <option value="Gaming">Gaming</option>
-                    <option value="Keyboard">Keyboard</option>
-                </select>
+                <span className="row">
 
-                <select value={sort} onChange={(e)=>{setSort(e.target.value)}} className="form-select ms-3 border-2 border-black rounded-pill" style={{ width: "200px" }}>
-                    <option value="default">Default Pricing</option>
-                    <option value="lowToHigh">Low to High Pricing</option>
-                    <option value="highToLow">High to Low Pricing</option>
-                </select>
+                    <select value={category} onChange={(e) => { setCategory(e.target.value), setSearch("") }} className="form-select ms-3 border-2 border-black rounded-pill" style={{ width: "200px" }}>
+                        <option value="all">All Categories</option>
+                        <option value="Wireless">Wireless</option>
+                        <option value="Gaming">Gaming</option>
+                        <option value="Keyboard">Keyboard</option>
+                    </select>
+
+                    <select value={sort} onChange={(e) => { setSort(e.target.value) }} className="form-select ms-3 border-2 border-black rounded-pill" style={{ width: "200px" }}>
+                        <option value="default">Default Pricing</option>
+                        <option value="lowToHigh">Low to High Pricing</option>
+                        <option value="highToLow">High to Low Pricing</option>
+                    </select>
+                </span>
             </div>
 
 
@@ -53,7 +56,7 @@ const Products = ({ addToCart, products, search, setSearch, category, setCategor
                                     Add to Cart
                                 </button>
                             </div>
-                        </div>
+                            </div>
                     );
                 }) :
                     <div className="text-center pt-5 my-5 fs-3">

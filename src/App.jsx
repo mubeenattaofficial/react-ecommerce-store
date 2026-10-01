@@ -1,14 +1,21 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Products from "./Components/Products";
 import Cart from "./Components/Cart";
 import "./App.css";
 
 const App = () => {
     // let total = count * headphonePrice;
-    let [cart, setCart] = useState([]);
+    let [cart, setCart] = useState(JSON.parse(localStorage.getItem("cart")) || []);
     const [search, setSearch] = useState("");
     const [category, setCategory] = useState("all");
     const [sort, setSort] = useState("default");
+
+    const [checkout, setCheckout] = useState({
+        name: "",
+        email: "",
+        phone: "",
+        address: ""
+    });
 
 
     function incrementCount(product) {
@@ -109,6 +116,8 @@ const App = () => {
             setCart([...cart, cartItem]);
         }
     }
+
+    // decide karta hai woh products kis order mein show honge.
     const sortingProducts = (products) => {
         if (sort === "lowToHigh") {
             return [...products].sort((a, b) => a.price - b.price);
@@ -121,6 +130,7 @@ const App = () => {
         }
     };
 
+    // decide karta hai kaunse products show honge.
     const filteredProducts = products.filter((product) => {
         if (search !== "") {
             return product.Product.toLowerCase().includes(search.toLowerCase());
@@ -134,6 +144,24 @@ const App = () => {
     });
 
     const sortedProducts = sortingProducts(filteredProducts);
+
+    useEffect(() => {
+        localStorage.setItem("cart", JSON.stringify(cart));
+    }, [cart])
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        const order = {
+            customer: checkout,
+            items: cart,
+            total: total()
+        };
+
+        clearCart();
+
+        console.log(order);
+    }
 
     return (
         <div className="row">
@@ -156,8 +184,45 @@ const App = () => {
                 total={total}
                 clearCart={clearCart}
                 cartQuantity={cartQuantity}
-            // count={count}
+
             />
+            <div className="container my-5">
+
+                <div className="d-flex justify-content-center">
+
+                    <form onSubmit={handleSubmit} className="card shadow-lg border-0 p-4" style={{ maxWidth: "500px", width: "100%" }}>
+
+                        <div className="text-center mb-4">
+                            <h3 className="fw-bold mb-2">ORDER FORM</h3>
+                            <p className="text-muted mb-0">Enter your details to place your order</p>
+                        </div>
+
+                        <div className="mb-3">
+                            <input type="text" placeholder="Name" className="form-control border-dark" value={checkout.name} onChange={(e) => setCheckout({ ...checkout, name: e.target.value })} />
+                        </div>
+
+                        <div className="mb-3">
+                            <input type="email" placeholder="Email" className="form-control border-dark" value={checkout.email} onChange={(e) => setCheckout({ ...checkout, email: e.target.value })} />
+                        </div>
+
+                        <div className="mb-3">
+                            <input type="text" placeholder="Phone" className="form-control border-dark" value={checkout.phone} onChange={(e) => setCheckout({ ...checkout, phone: e.target.value })} />
+                        </div>
+
+                        <div className="mb-4">
+                            <input type="text" placeholder="Address" className="form-control border-dark" value={checkout.address} onChange={(e) => setCheckout({ ...checkout, address: e.target.value })} />
+                        </div>
+
+                        <button type="submit" className="btn btn-success rounded-pill fw-semibold w-100">Place Order</button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+
+
         </div>
 
 
