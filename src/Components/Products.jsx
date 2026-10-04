@@ -1,5 +1,5 @@
 
-const Products = ({ addToCart, products, search, setSearch, category, setCategory, sort, setSort }) => {
+const Products = ({ addToCart, products, search, setSearch, category, setCategory, sort, setSort, categories }) => {
 
     return (
         <>
@@ -22,9 +22,10 @@ const Products = ({ addToCart, products, search, setSearch, category, setCategor
 
                     <select value={category} onChange={(e) => { setCategory(e.target.value), setSearch("") }} className="form-select ms-3 border-2 border-black rounded-pill" style={{ width: "200px" }}>
                         <option value="all">All Categories</option>
-                        <option value="Wireless">Wireless</option>
-                        <option value="Gaming">Gaming</option>
-                        <option value="Keyboard">Keyboard</option>
+                        {categories.map((category) => (
+                            <option key={category.slug} value={category.slug}>{category.name}</option>
+                        ))}
+                        
                     </select>
 
                     <select value={sort} onChange={(e) => { setSort(e.target.value) }} className="form-select ms-3 border-2 border-black rounded-pill" style={{ width: "200px" }}>
@@ -39,9 +40,9 @@ const Products = ({ addToCart, products, search, setSearch, category, setCategor
             {
                 products.length > 0 ? products.map((p) => {
                     return (
-                        <div className="d-flex col-md-6" key={p.id}>
+                        <div className="d-flex col-md-3" key={p.id}>
                             <div className="app card border-3">
-                                <h3 className="display-6">{p.Product}</h3>
+                                <h3 className="display-6">{p.title}</h3>
 
                                 <div className="d-flex justify-content-between">
                                     <p className="fs-3">
@@ -51,7 +52,7 @@ const Products = ({ addToCart, products, search, setSearch, category, setCategor
 
                                 <button
                                     onClick={() => addToCart(p)}
-                                    className="btn btn-dark rounded-pill mt-3" style={{ width: "500px" }}
+                                    className="btn btn-dark rounded-pill mt-3" style={{ width: "200px" }}
                                 >
                                     Add to Cart
                                 </button>

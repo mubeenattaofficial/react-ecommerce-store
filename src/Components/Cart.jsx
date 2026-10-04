@@ -16,7 +16,7 @@ const Cart = ({ cart, incrementCount, decrementCount, total, removeProduct, clea
                                     return (
                                         <div className="mt-3 fs-4 " key={cartItem.id}>
                                             <div className=" d-flex justify-content-around">
-                                                <span className="fs-3 d-flex justify-content-start">{cartItem.Product}- {cartItem.price}$</span>
+                                                <span className="fs-3 d-flex justify-content-start">{cartItem.title}- {cartItem.price}$</span>
                                                 <div className="d-flex align-items-center gap-2">
                                                     <button onClick={() => incrementCount(cartItem)} className="btn btn-primary rounded-circle fw-bold p-0" style={{ width: "30px", height: "30px" }}>+</button>
                                                     <p className="fs-4 mb-0 px-2">{cartItem.quantity}</p>

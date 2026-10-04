@@ -4,11 +4,13 @@ import Cart from "./Components/Cart";
 import "./App.css";
 
 const App = () => {
-    // let total = count * headphonePrice;
+
     let [cart, setCart] = useState(JSON.parse(localStorage.getItem("cart")) || []);
     const [search, setSearch] = useState("");
     const [category, setCategory] = useState("all");
+    const [categories, setCategories] = useState([]);
     const [sort, setSort] = useState("default");
+    const [product, setProduct] = useState([]);
 
     const [checkout, setCheckout] = useState({
         name: "",
@@ -16,6 +18,42 @@ const App = () => {
         phone: "",
         address: ""
     });
+
+    useEffect(() => {
+        let url;
+        if (search !== "") {
+            url = `https://dummyjson.com/products/search?q=${search}`;
+        }
+        else if (category !== "all") {
+            url = `https://dummyjson.com/products/category/${category}`;
+        }
+        else {
+            url = 'https://dummyjson.com/products';
+        }
+
+        if (sort === "lowToHigh") {
+            url += url.includes("?") ? "&sortBy=price&order=asc" : "?sortBy=price&order=asc";
+        }
+        else if (sort === "highToLow") {
+            url += url.includes("?") ? "&sortBy=price&order=desc" : "?sortBy=price&order=desc";
+        }
+        console.log(url);
+
+        fetch(url)
+            .then(res => res.json())
+            .then(data => setProduct(data.products));
+
+    }, [search, category, sort]);
+
+    useEffect(() => {
+        fetch('https://dummyjson.com/products/categories')
+            .then(res => res.json())
+            .then(data => {
+                setCategories(data);
+            })
+    }, []);
+
+
 
 
     function incrementCount(product) {
@@ -78,34 +116,6 @@ const App = () => {
         return cartQuantity;
     }
 
-    const products = [
-        {
-            id: 1,
-            Product: "Wireless Headphones",
-            price: 49,
-            category: "Wireless"
-        },
-        {
-            id: 2,
-            Product: "Gaming Mouse",
-            price: 29,
-            category: "Gaming"
-        },
-        {
-            id: 3,
-            Product: "Mechanical Keyboard",
-            price: 79,
-            category: "Keyboard"
-        },
-        {
-            id: 4,
-            Product: "Gaming LCD 64-inch",
-            price: 804,
-            category: "Gaming"
-        }
-    ];
-
-
     function addToCart(product) {
         const isExist = cart.some((cartItem) => cartItem.id === product.id);
         if (isExist) {
@@ -116,34 +126,6 @@ const App = () => {
             setCart([...cart, cartItem]);
         }
     }
-
-    // decide karta hai woh products kis order mein show honge.
-    const sortingProducts = (products) => {
-        if (sort === "lowToHigh") {
-            return [...products].sort((a, b) => a.price - b.price);
-        }
-        else if (sort === "highToLow") {
-            return [...products].sort((a, b) => b.price - a.price);
-        }
-        else {
-            return products;
-        }
-    };
-
-    // decide karta hai kaunse products show honge.
-    const filteredProducts = products.filter((product) => {
-        if (search !== "") {
-            return product.Product.toLowerCase().includes(search.toLowerCase());
-        }
-        else if (category !== "all") {
-            return product.category === category;
-        }
-        else {
-            return true;
-        }
-    });
-
-    const sortedProducts = sortingProducts(filteredProducts);
 
     useEffect(() => {
         localStorage.setItem("cart", JSON.stringify(cart));
@@ -167,13 +149,14 @@ const App = () => {
         <div className="row">
             <Products
                 addToCart={addToCart}
-                products={sortedProducts}
+                products={product}
                 search={search}
                 setSearch={setSearch}
                 category={category}
                 setCategory={setCategory}
                 sort={sort}
                 setSort={setSort}
+                categories={categories}
             />
 
             <Cart
