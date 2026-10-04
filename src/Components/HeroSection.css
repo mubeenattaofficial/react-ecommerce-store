@@ -1,0 +1,48 @@
+/* Hero height: mobile first, then bigger screens */
+.hero-carousel,
+.hero-carousel .carousel-inner,
+.hero-slide {
+  height: 40vh; /* mobile: roughly 35-45vh */
+  min-height: 220px; /* so very short phones don't squash the text */
+}
+
+/* Tablet */
+@media (min-width: 768px) {
+  .hero-carousel,
+  .hero-carousel .carousel-inner,
+  .hero-slide {
+    height: 45vh;
+  }
+}
+
+/* Desktop */
+@media (min-width: 992px) {
+  .hero-carousel,
+  .hero-carousel .carousel-inner,
+  .hero-slide {
+    height: 50vh;
+  }
+}
+
+/* The image fills the whole slide area.
+   object-fit: cover = image is scaled to fill, extra parts get cropped.
+   object-position: center = the middle of the image stays visible. */
+.hero-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* clamp(min, preferred, max): font grows with screen width but never
+   goes below the min or above the max */
+.hero-title {
+  font-size: clamp(1.5rem, 4vw, 3rem);
+}
+
+.hero-text {
+  font-size: clamp(0.9rem, 1.6vw, 1.25rem);
+}

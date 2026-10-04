@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react"
 import Products from "./Components/Products";
 import Cart from "./Components/Cart";
+import Navbar from "./Components/Navbar";
+import HeroSection from "./Components/HeroSection";
+
 import "./App.css";
 
 const App = () => {
@@ -21,6 +24,8 @@ const App = () => {
 
     useEffect(() => {
         let url;
+        const controller = new AbortController();
+
         if (search !== "") {
             url = `https://dummyjson.com/products/search?q=${search}`;
         }
@@ -37,11 +42,17 @@ const App = () => {
         else if (sort === "highToLow") {
             url += url.includes("?") ? "&sortBy=price&order=desc" : "?sortBy=price&order=desc";
         }
-        console.log(url);
 
-        fetch(url)
+        fetch(url, { signal: controller.signal })
             .then(res => res.json())
-            .then(data => setProduct(data.products));
+            .then(data => setProduct(data.products))
+            .catch(err => {
+                if (err.name !== "AbortError") {
+                    console.error(err);
+                }
+            });
+
+        return () => controller.abort();
 
     }, [search, category, sort]);
 
@@ -146,67 +157,76 @@ const App = () => {
     }
 
     return (
-        <div className="row">
-            <Products
-                addToCart={addToCart}
-                products={product}
-                search={search}
-                setSearch={setSearch}
-                category={category}
-                setCategory={setCategory}
-                sort={sort}
-                setSort={setSort}
-                categories={categories}
-            />
+        <>
 
-            <Cart
-                cart={cart}
-                incrementCount={incrementCount}
-                decrementCount={decrementCount}
-                removeProduct={removeProduct}
-                total={total}
-                clearCart={clearCart}
-                cartQuantity={cartQuantity}
+            <Navbar />
+            <HeroSection />
 
-            />
-            <div className="container my-5">
+            <div className="row">
 
-                <div className="d-flex justify-content-center">
 
-                    <form onSubmit={handleSubmit} className="card shadow-lg border-0 p-4" style={{ maxWidth: "500px", width: "100%" }}>
+                <Products
+                    addToCart={addToCart}
+                    products={product}
+                    search={search}
+                    setSearch={setSearch}
+                    category={category}
+                    setCategory={setCategory}
+                    sort={sort}
+                    setSort={setSort}
+                    categories={categories}
+                />
 
-                        <div className="text-center mb-4">
-                            <h3 className="fw-bold mb-2">ORDER FORM</h3>
-                            <p className="text-muted mb-0">Enter your details to place your order</p>
-                        </div>
+                <Cart
+                    cart={cart}
+                    incrementCount={incrementCount}
+                    decrementCount={decrementCount}
+                    removeProduct={removeProduct}
+                    total={total}
+                    clearCart={clearCart}
+                    cartQuantity={cartQuantity}
 
-                        <div className="mb-3">
-                            <input type="text" placeholder="Name" className="form-control border-dark" value={checkout.name} onChange={(e) => setCheckout({ ...checkout, name: e.target.value })} />
-                        </div>
+                />
+                <div className="container my-5">
 
-                        <div className="mb-3">
-                            <input type="email" placeholder="Email" className="form-control border-dark" value={checkout.email} onChange={(e) => setCheckout({ ...checkout, email: e.target.value })} />
-                        </div>
+                    <div className="d-flex justify-content-center">
 
-                        <div className="mb-3">
-                            <input type="text" placeholder="Phone" className="form-control border-dark" value={checkout.phone} onChange={(e) => setCheckout({ ...checkout, phone: e.target.value })} />
-                        </div>
+                        <form onSubmit={handleSubmit} className="card shadow-lg border-0 p-4" style={{ maxWidth: "500px", width: "100%" }}>
 
-                        <div className="mb-4">
-                            <input type="text" placeholder="Address" className="form-control border-dark" value={checkout.address} onChange={(e) => setCheckout({ ...checkout, address: e.target.value })} />
-                        </div>
+                            <div className="text-center mb-4">
+                                <h3 className="fw-bold mb-2">ORDER FORM</h3>
+                                <p className="text-muted mb-0">Enter your details to place your order</p>
+                            </div>
 
-                        <button type="submit" className="btn btn-success rounded-pill fw-semibold w-100">Place Order</button>
+                            <div className="mb-3">
+                                <input type="text" placeholder="Name" className="form-control border-dark" value={checkout.name} onChange={(e) => setCheckout({ ...checkout, name: e.target.value })} />
+                            </div>
 
-                    </form>
+                            <div className="mb-3">
+                                <input type="email" placeholder="Email" className="form-control border-dark" value={checkout.email} onChange={(e) => setCheckout({ ...checkout, email: e.target.value })} />
+                            </div>
+
+                            <div className="mb-3">
+                                <input type="text" placeholder="Phone" className="form-control border-dark" value={checkout.phone} onChange={(e) => setCheckout({ ...checkout, phone: e.target.value })} />
+                            </div>
+
+                            <div className="mb-4">
+                                <input type="text" placeholder="Address" className="form-control border-dark" value={checkout.address} onChange={(e) => setCheckout({ ...checkout, address: e.target.value })} />
+                            </div>
+
+                            <button type="submit" className="btn btn-success rounded-pill fw-semibold w-100">Place Order</button>
+
+                        </form>
+
+                    </div>
 
                 </div>
 
+
+
             </div>
 
-
-
-        </div>
+        </>
 
 
     )

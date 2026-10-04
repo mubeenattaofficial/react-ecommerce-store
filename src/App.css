@@ -25,3 +25,6 @@ align-items: center;
   height: 550px;
   width: 1263px;
 }
+.navbar {
+    background-color: #050B18;
+}
