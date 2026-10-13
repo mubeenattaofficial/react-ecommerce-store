@@ -3,6 +3,7 @@ import Products from "./Components/Products";
 import Cart from "./Components/Cart";
 import Navbar from "./Components/Navbar";
 import HeroSection from "./Components/HeroSection";
+import CategorySection from "./Components/CategorySection";
 
 import "./App.css";
 
@@ -14,6 +15,16 @@ const App = () => {
     const [categories, setCategories] = useState([]);
     const [sort, setSort] = useState("default");
     const [product, setProduct] = useState([]);
+
+    const [allProducts, setAllProducts] = useState([]);
+
+    useEffect(() => {
+        fetch("https://dummyjson.com/products?limit=0")
+            .then(res => res.json())
+            .then(data => setAllProducts(data.products))
+            .catch(err => console.error(err));
+    }, []);
+
 
     const [checkout, setCheckout] = useState({
         name: "",
@@ -161,6 +172,10 @@ const App = () => {
 
             <Navbar />
             <HeroSection />
+            <CategorySection 
+                allProducts={allProducts}
+                addToCart={addToCart}
+            />
 
             <div className="row">
 

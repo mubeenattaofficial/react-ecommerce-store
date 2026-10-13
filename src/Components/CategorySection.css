@@ -1,0 +1,12 @@
+
+
+.product-row {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    padding-bottom: 12px;
+}
+
+.product-card {
+    flex: 0 0 300px;
+}
