@@ -1,8 +1,112 @@
+import "./Cart.css";
+import { Link } from "react-router";
 
 const Cart = ({ cart, incrementCount, decrementCount, total, removeProduct, clearCart, cartQuantity }) => {
     return (
         <>
-            <section className="col-md-8">
+            <section className="container cart-page py-5">
+                <div className="cart-header mb-4">
+                    <h3>Shopping Cart</h3>
+                </div>
+                <div className="row g-5 cart-layout">
+                    <div className="col-12 col-lg-8">
+                        <div className="cart-products">
+                            {
+                                cart.length > 0 ?
+                                    cart.map((cartItem) => {
+                                        return (
+                                            <div className="cart-product-item" key={cartItem.id}>
+                                                <div className="cart-product-info">
+                                                    <img
+                                                        src={cartItem.thumbnail}
+                                                        alt={cartItem.title}
+                                                        className="cart-product-image"
+                                                    />
+                                                    <div>
+                                                        <h5>{cartItem.title}</h5>
+                                                        <p>${cartItem.price}</p>
+                                                    </div>
+                                                </div>
+                                                <div className="cart-product-actions">
+                                                    <div className="cart-quantity">
+                                                        <button
+                                                            onClick={() => decrementCount(cartItem)}
+                                                            className="btn"
+                                                        >
+                                                            −
+                                                        </button>
+
+                                                        <span>{cartItem.quantity}</span>
+
+                                                        <button
+                                                            onClick={() => incrementCount(cartItem)}
+                                                            className="btn"
+                                                        >
+                                                            +
+                                                        </button>
+                                                    </div>
+
+                                                    <button
+                                                        onClick={() => removeProduct(cartItem)}
+                                                        className="btn cart-remove-btn"
+                                                        aria-label={`Remove ${cartItem.title}`}
+                                                    >
+                                                        <i className="bi bi-trash"></i>
+                                                    </button>
+                                                </div>
+
+                                            </div>
+                                        );
+                                    })
+
+                                    : <div className="text-center pt-5">
+                                        Cart is Empty
+                                    </div>
+
+                            }
+                        </div>
+
+                    </div>
+                    <div className="col-12 col-lg-4">
+                        <div className="cart-summary">
+                            <h4>Order Summary</h4>
+
+                            <div className="summary-row">
+                                <span>Subtotal</span>
+                                <span>${total().toFixed(2)}</span>
+                            </div>
+
+                            <div className="summary-row">
+                                <span>Shipping</span>
+                                <span className="free-shipping">Free</span>
+                            </div>
+
+                            <hr />
+
+                            <div className="summary-total">
+                                <span>Total</span>
+                                <span>${total().toFixed(2)}</span>
+                            </div>
+
+                            <button className="checkout-btn">
+                                Proceed to Checkout
+                            </button>
+
+                            <Link to="/Products" className="continue-shopping">
+                                Continue Shopping
+                            </Link>
+
+                            <button
+                                className="clear-cart-btn"
+                                onClick={clearCart}
+                            >
+                                Clear Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            {/* <section className="col-12">
                 <div>
                     <div id="cart" className="card border-3 bg-dark text-light pt-3 mt-3">
                         <div className="text-center">
@@ -44,7 +148,7 @@ const Cart = ({ cart, incrementCount, decrementCount, total, removeProduct, clea
 
                 </div>
 
-            </section>
+            </section> */}
         </>
     )
 };

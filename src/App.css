@@ -10,20 +10,25 @@ body {
   color: white;
 }
 
+html,
+body {
+  overflow-x: clip;
+}
+
 #root {
   min-height: 100vh;
   width: 100%;
 }
 
 .app {
-  /* min-height: 550px; */
-  width: 610px;
-  padding: 40px;
-align-items: center;
+  width: 100%;
+  max-width: 100%;
+  padding: 20px;
 }
 #cart {
-  height: 550px;
-  width: 1263px;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
 }
 .navbar {
     background-color: #050B18;

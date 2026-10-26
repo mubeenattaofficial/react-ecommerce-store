@@ -1,0 +1,164 @@
+
+/* Main card */
+.category-card {
+  position: relative;
+  min-height: 240px;
+  padding: 20px;
+  border-radius: 14px;
+  overflow: hidden;
+  isolation: isolate;
+  background: #e7f3eb;
+}
+
+/* Different card colors */
+.furniture-card {
+  background: #e7f3eb;
+  --icon-bg: #78bfa9;
+}
+
+.beauty-card {
+  background: #f9ecea;
+  --icon-bg: #d9a5a5;
+}
+
+.kitchen-card {
+  background: #e7f3eb;
+  --icon-bg: #78bfa9;
+}
+
+/* Text section */
+.category-content {
+  position: relative;
+  z-index: 2;
+  width: 50%;
+}
+
+.category-icon {
+  width: 44px;
+  height: 44px;
+  margin-bottom: 10px;
+  border-radius: 50%;
+  background: var(--icon-bg);
+  color: #064e43;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.category-icon i {
+  font-size: 21px;
+}
+
+.category-content h3 {
+  margin: 0 0 6px;
+  color: #064e43;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.category-content p {
+  margin: 0 0 14px;
+  color: #405c55;
+  font-size: 12px;
+  line-height: 18px;
+
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+
+  min-height: 36px;
+}
+
+/* Circular arrow button */
+.category-btn {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: #064e43;
+  color: #ffffff;
+  font-size: 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.category-btn:hover {
+  background: #087f68;
+}
+
+/* Image on the bottom-right */
+.category-image {
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  bottom: 0;
+  width: 53%;
+  height: 90%;
+  overflow: hidden;
+  border-radius: 55% 0 0 0;
+}
+
+.category-image img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Compact mobile cards */
+@media (max-width: 576px) {
+  .category-section {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .category-card {
+    min-height: 100px;
+    padding: 8px 5px;
+    border-radius: 10px;
+  }
+
+  .category-content {
+    width: 72%;
+  }
+
+  .category-icon {
+    width: 28px;
+    height: 28px;
+    margin-bottom: 6px;
+  }
+
+  .category-icon i {
+    font-size: 14px;
+  }
+
+  .category-content h3 {
+    margin-bottom: 0;
+    font-size: clamp(10px, 2.8vw, 15px);
+    overflow-wrap: anywhere;
+  }
+
+  .category-content p {
+    display: none;
+  }
+
+  .category-btn {
+    width: 25px;
+    height: 25px;
+    margin-top: 8px;
+    font-size: 13px;
+  }
+
+  .category-image {
+    width: 55%;
+    height: 90%;
+  }
+}

@@ -4,7 +4,7 @@ const Products = ({ addToCart, products, search, setSearch, category, setCategor
     return (
         <>
             {/* <h3 className="container text-center fs-1 py-3 fw-bolder bg-dark text-light">Our Products</h3> */}
-            <div className="m-3 position-relative d-flex">
+            <div className="m-3 position-relative d-flex flex-wrap align-items-center gap-2">
                 <i className="bi bi-search position-absolute top-50 start-20 translate-middle-y ms-3"></i>
                 <input
                     type="text"
@@ -14,13 +14,14 @@ const Products = ({ addToCart, products, search, setSearch, category, setCategor
                     className="ps-5 pe-3 py-2 rounded-pill"
                     style={{
                         width: "300px",
+                        maxWidth: "100%",
                         border: "2px solid #212529",
                         outline: "none"
                     }}
                 />
-                <span className="row">
+                <div className="d-flex flex-wrap gap-2">
 
-                    <select value={category} onChange={(e) => { setCategory(e.target.value), setSearch("") }} className="form-select ms-3 border-2 border-black rounded-pill" style={{ width: "200px" }}>
+                    <select value={category} onChange={(e) => { setCategory(e.target.value), setSearch("") }} className="form-select border-2 border-black rounded-pill" style={{ width: "200px", maxWidth: "100%" }}>
                         <option value="all">All Categories</option>
                         {categories.map((category) => (
                             <option key={category.slug} value={category.slug}>{category.name}</option>
@@ -28,12 +29,12 @@ const Products = ({ addToCart, products, search, setSearch, category, setCategor
 
                     </select>
 
-                    <select value={sort} onChange={(e) => { setSort(e.target.value) }} className="form-select ms-3 border-2 border-black rounded-pill" style={{ width: "200px" }}>
+                    <select value={sort} onChange={(e) => { setSort(e.target.value) }} className="form-select border-2 border-black rounded-pill" style={{ width: "200px", maxWidth: "100%" }}>
                         <option value="default">Default Pricing</option>
                         <option value="lowToHigh">Low to High Pricing</option>
                         <option value="highToLow">High to Low Pricing</option>
                     </select>
-                </span>
+                </div>
             </div>
 
 

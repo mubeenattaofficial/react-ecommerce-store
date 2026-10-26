@@ -4,9 +4,9 @@ import "./HeroSection.css";
 
 // Image imports (folder: src/projectImages)
 
-import furnitureImg from "../projectImages/Furniture.jpg";
-import beautyImg from "../projectImages/Beauty.jpg";
-import electronicsImg from "../projectImages/Gagdets.jpg";
+import furnitureImg from "../assets/Furniture.jpg";
+import beautyImg from "../assets/Beauty.jpg";
+import electronicsImg from "../assets/Gagdets.jpg";
 
 // All slide data in one array, so the JSX below stays short (3 slides for now)
 const slides = [
